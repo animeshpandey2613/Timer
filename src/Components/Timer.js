@@ -20,7 +20,11 @@ function Timer() {
     TimeObj.Hour = Math.floor(+value / 60);
     setTime(TimeObj);
   };
-  const DecreaseTime = () => {
+  useEffect(() => {
+    const Interval = setInterval(() => {
+      if (Start === true) {
+
+        
     if (Time.Second === 0 && Time.Minute === 0 && Time.Hour === 0) {
       setStart(false);
       return;
@@ -38,11 +42,6 @@ function Timer() {
     }
     setTime(TimeObj);
   };
-  useEffect(() => {
-    const Interval = setInterval(() => {
-      if (Start === true) {
-        DecreaseTime();
-      }
     }, 1000);
     return ()=>clearInterval(Interval);
   }, [Start, Time]);
