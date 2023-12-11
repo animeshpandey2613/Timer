@@ -12,6 +12,9 @@ function Timer() {
   const [Start, setStart] = useState(false);
   const ChangeHandler = (event) => {
     setStart(false);
+    if(event.target.value=="-"){
+      return;
+    };
     const value = event.target.value;
     setUserInput(value);
     const TimeObj = { ...Time };
