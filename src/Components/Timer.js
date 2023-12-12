@@ -12,7 +12,14 @@ function Timer() {
   const [Start, setStart] = useState(false);
   const ChangeHandler = (event) => {
     setStart(false);
-    if (event.target.value === "-" || event.target.value === ".") {
+    if (event.target.value === "-" || (+event.target.value)%1!==0) {
+      alert('please input a Positive Integer');
+      setUserInput("");
+      setTime({
+        Hour: 0,
+        Minute: 0,
+        Second: 0,
+      })
       return;
     }
     const value = event.target.value;
