@@ -12,13 +12,13 @@ function Timer() {
   const [Start, setStart] = useState(false);
   const ChangeHandler = (event) => {
     setStart(false);
-    if(event.target.value==="-"){
+    if (event.target.value === "-" || event.target.value === ".") {
       return;
-    };
+    }
     const value = event.target.value;
     setUserInput(value);
     const TimeObj = { ...Time };
-    TimeObj.Second=0;
+    TimeObj.Second = 0;
     TimeObj.Minute = +value % 60;
     TimeObj.Hour = Math.floor(+value / 60);
     setTime(TimeObj);
@@ -26,27 +26,25 @@ function Timer() {
   useEffect(() => {
     const Interval = setInterval(() => {
       if (Start === true) {
-
-        
-    if (Time.Second === 0 && Time.Minute === 0 && Time.Hour === 0) {
-      setStart(false);
-      return;
-    }
-    const TimeObj = { ...Time };
-    if (Time.Second === 0 && Time.Minute === 0) {
-      TimeObj.Hour--;
-      TimeObj.Minute = 59;
-      TimeObj.Second = 59;
-    } else if (Time.Second === 0) {
-      TimeObj.Minute--;
-      TimeObj.Second = 59;
-    } else {
-      TimeObj.Second--;
-    }
-    setTime(TimeObj);
-  };
+        if (Time.Second === 0 && Time.Minute === 0 && Time.Hour === 0) {
+          setStart(false);
+          return;
+        }
+        const TimeObj = { ...Time };
+        if (Time.Second === 0 && Time.Minute === 0) {
+          TimeObj.Hour--;
+          TimeObj.Minute = 59;
+          TimeObj.Second = 59;
+        } else if (Time.Second === 0) {
+          TimeObj.Minute--;
+          TimeObj.Second = 59;
+        } else {
+          TimeObj.Second--;
+        }
+        setTime(TimeObj);
+      }
     }, 1000);
-    return ()=>clearInterval(Interval);
+    return () => clearInterval(Interval);
   }, [Start, Time]);
   return (
     <Container>
@@ -65,10 +63,16 @@ function Timer() {
             setStart(!Start);
           }}
         >
-            {Start?(<FaCirclePause className="ButtonChange" />):(<FaCirclePlay className="ButtonChange" />)}
+          {Start ? (
+            <FaCirclePause className="ButtonChange" />
+          ) : (
+            <FaCirclePlay className="ButtonChange" />
+          )}
         </Button>
         <Counting>
-          {Time.Hour<10?(`0${Time.Hour}`):(Time.Hour)}:{Time.Minute<10?(`0${Time.Minute}`):(Time.Minute)}:{Time.Second<10?(`0${Time.Second}`):(Time.Second)}
+          {Time.Hour < 10 ? `0${Time.Hour}` : Time.Hour}:
+          {Time.Minute < 10 ? `0${Time.Minute}` : Time.Minute}:
+          {Time.Second < 10 ? `0${Time.Second}` : Time.Second}
         </Counting>
       </Counter>
     </Container>
@@ -97,7 +101,7 @@ const Counter = styled.div`
 `;
 const Counting = styled.div`
   font-size: 4vw;
-  width:20vw;
+  width: 20vw;
 `;
 const Button = styled.div``;
 export default Timer;
